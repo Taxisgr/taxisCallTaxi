@@ -55,9 +55,9 @@ function CallTaxi()
 
 			-- Get player coordinates and then spawn the taxi next to them
             Wait(Config.WaitTime * 1000)
-			local PlayerCoords = GetEntityCoords(PlayerPedId())
-			local found, random_pos, heading = GetClosestVehicleNodeWithHeading(PlayerCoords.x - math.random(-1, Config.MaxDistance), PlayerCoords.y - math.random(-1, Config.MaxDistance), PlayerCoords.z, 12, 3.0, 0)
-			vehicle = CreateVehicle(Config.CarSpawnName, random_pos, outHeading, true, false)
+			local pCoords = GetEntityCoords(PlayerPedId())
+			local f, rp, heading = GetClosestVehicleNodeWithHeading(pCoords.x - math.random(-1, Config.MaxDistance), pCoords.y - math.random(-1, Config.MaxDistance), pCoords.z, 12, 3.0, 0)
+			vehicle = CreateVehicle(Config.CarSpawnName, rp, outHeading, true, false)
 
 			-- Request Ped Model (Npc Driver) from the config
 			local Model = Config.NPCModel
@@ -81,27 +81,23 @@ function CallTaxi()
 			SetVehicleEngineOn(vehicle, true, true, false)
 
 			SetDriveTaskDrivingStyle(driver, 1074528293)
-			TaskVehicleDriveToCoord(driver, vehicle, PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, 26.0, 0, Config.CarSpawnName, 411, 10.0)
+			TaskVehicleDriveToCoord(driver, vehicle, pCoords.x, pCoords.y, pCoords.z, 26.0, 0, Config.CarSpawnName, 411, 10.0)
 			SetPedKeepTask(driver, true)
 
 			ESX.ShowNotification("Your taxi will be here in the next few seconds")
 
-			while #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(vehicle)) > 7.0 do
-				Wait(200)
+			while #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(vehicle)) > 10.0 do
+				Wait(500)
 			end
 
 			-- Delete
-			local PlayerCoords = GetEntityCoords(PlayerPedId())
-			local RandomCoords = vector3(PlayerCoords.x - math.random(-80, 80), PlayerCoords.y - math.random(-80, 80), PlayerCoords.z)
-
+		
 			TaskLeaveVehicle(driver, vehicle, 1)
-
-			SetEntityAsMissionEntity(vehicle, false, false)
 			SetEntityAsMissionEntity(driver, false, false)
+			SetEntityAsMissionEntity(vehicle, false, false)
 			SetPedKeepTask(driver, false)
-
 			TaskWanderStandard(driver, 10.0, 10)
-			Wait(5000)
+			Wait(6000)
 			DeletePed(driver)
 			DeleteEntity(driver)
 			driver = nil
