@@ -22,8 +22,6 @@ function CallTaxi()
 	end
 
 	if not DoesEntityExist(vehicle) then -- If the player has already called a taxi, then notify them and cancel
-            -- If the player is in a vehicle, then notify them and cancel
-			-- Request Taxi Model from the config
             
             
             TriggerServerEvent("taxisCallTaxi:pay")
