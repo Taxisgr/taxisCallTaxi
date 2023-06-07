@@ -17,10 +17,8 @@ AddEventHandler('taxisCallTaxi:pay', function()
         SendDiscordLog(msg)
         end
     end
-
-    print(done)
+    
     TriggerClientEvent('taxisCallTaxi:isok', source, done)
-    print(source, done)
 end)
 
 function SendDiscordLog(message)
