@@ -1,5 +1,9 @@
-ESX = nil
-ESX = exports["es_extended"]:getSharedObject()
+if Config.USEESX then
+ 	ESX = exports["es_extended"]:getSharedObject()
+else
+	QBCore = exports['qb-core']:GetCoreObject()
+end
+
 commandCooldown = false 
 commandCooldownTime = Config.CommandCooldownTime * 1000
 vehicle = nil
@@ -9,14 +13,21 @@ flag = false
 
 function CallTaxi() 
     if commandCooldown then
+		if Config.USEESX then
 		ESX.ShowNotification("Command is on cooldown. Please wait.")
+		else
+		QBCore.Functions.Notify("Command is on cooldown. Please wait.")
+		end
 		return
 	end
     
     if Config.CanCallInsideVehicle == false then
 		-- Check if the player is already in a vehicle,  If the player is in a vehicle, then notify them and cancel
 		if IsPedInAnyVehicle(PlayerPedId()) then
+			if Config.USEESX then
 			ESX.ShowNotification("You are inside a vehicle, please get out in order to call a taxi!")
+			else
+			QBCore.Functions.Notify("You are inside a vehicle, please get out in order to call a taxi!")
 			return
 		end
 	end
@@ -28,8 +39,13 @@ function CallTaxi()
             RegisterNetEvent('taxisCallTaxi:isok')
             AddEventHandler('taxisCallTaxi:isok', function(payed)
                 if not payed then
+					if Config.USEESX then
                     ESX.ShowNotification("You don't have enough money to pay the taxi. Money Needed: ".. Config.Price.. " from ".. Config.PriceType .. " account")
                     flag = true -- Set the flag to true to stop code execution
+					else
+					QBCore.Functions.Notify("You don't have enough money to pay the taxi. Money Needed: ".. Config.Price.. " from ".. Config.PriceType .. " account")
+					flag = true
+					end
                 else 
                     flag = false
                 end
@@ -50,8 +66,11 @@ function CallTaxi()
 				Wait(0)
 			end
 
+			if Config.USEESX then
             ESX.ShowNotification("You have successfully called a taxi!")
-           
+			else
+			QBCore.Functions.Notify("You have successfully called a taxi!")
+			end
 
 			-- Get player coordinates and then spawn the taxi next to them
             Wait(Config.WaitTime * 1000)
@@ -83,8 +102,12 @@ function CallTaxi()
 			SetDriveTaskDrivingStyle(driver, 1074528293)
 			TaskVehicleDriveToCoord(driver, vehicle, pCoords.x, pCoords.y, pCoords.z, 26.0, 0, Config.CarSpawnName, 411, 10.0)
 			SetPedKeepTask(driver, true)
-
+			
+			if Config.USEESX then
 			ESX.ShowNotification("Your taxi will be here in the next few seconds")
+			else 
+			QBCore.Functions.Notify("Your taxi will be here in the next few seconds")
+			end
 
 			while #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(vehicle)) > 10.0 do
 				Wait(500)
@@ -116,7 +139,10 @@ function CallTaxi()
 			end
             end
         else
+			if Config.USEESX then
             ESX.ShowNotification("Your taxi is already here/coming")
+			else 
+			QBCore.Functions.Notify("Your taxi is already here/coming")
         end
 end
 
