@@ -1,5 +1,7 @@
 Config = {}
 
+Config.USEESX = true -- If false, then it will use qbcore framework instead of esx framework!
+
 Config.CarSpawnName = `taxi` --Select the spawn name of the car that spawns when you call a taxi
 Config.NPCModel = `a_m_y_stlat_01` -- Select the drivers ped model from here : https://docs.fivem.net/docs/game-references/ped-models/
 Config.MaxDistance = 200 --The taxi is spawned in random distance from the user, here you can set the maximum distance from the player that the taxi will spawn when called. Dont type values lower than 1 and higher than 200. The greater the value , the more farther the taxi will spawn.
