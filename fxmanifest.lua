@@ -10,8 +10,8 @@ client_scripts {
 }
 
 server_scripts {
-    'server/Server.lua',
     'Config.lua',
+    'server/Server.lua',
 }
 
 
