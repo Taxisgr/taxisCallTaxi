@@ -139,12 +139,14 @@ function CallTaxi()
 				Wait(100)
 			end
             end
-        else
-			if Config.USEESX then
-            ESX.ShowNotification("Your taxi is already here/coming")
-			else 
-			QBCore.Functions.Notify("Your taxi is already here/coming")
-        end
+else
+	 if Config.USEESX then
+      ESX.ShowNotification("Your taxi is already here/coming")
+	 else 
+	  QBCore.Functions.Notify("Your taxi is already here/coming")
+     end
+end
+
 end
 
 RegisterCommand(Config.CommandName, function()
