@@ -28,6 +28,7 @@ function CallTaxi()
 			ESX.ShowNotification("You are inside a vehicle, please get out in order to call a taxi!")
 			else
 			QBCore.Functions.Notify("You are inside a vehicle, please get out in order to call a taxi!")
+			end
 			return
 		end
 	end
